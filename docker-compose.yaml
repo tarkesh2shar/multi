@@ -1,0 +1,31 @@
+version: "3"
+services:
+  mongo:
+    image: mongo
+  redis:
+    image: "redis:latest"
+  nginx:
+    restart: always
+    build:
+      dockerfile: DockerFile.dev
+      context: ./nginx
+    ports:
+      - "8080:80"
+  client:
+    build:
+      context: ./reactWebpackStarter
+      dockerfile: DockerFile.dev
+    volumes:
+      - /app/node_modules
+      - ./reactWebpackStarter:/app
+  api:
+    build:
+      context: ./server
+      dockerfile: DockerFile.dev
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      - MONGO_DB_URL=mongodb://mongo
+      - MONGO_DATABASE_NAME=docker
+      - REDIS_HOST=redis

@@ -1,0 +1,171 @@
+//Few Defualt settings //
+
+//mixins//
+@mixin clearfix {
+	&::after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+@mixin absCenter {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+// MEDIA QUERY MANAGER
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet portrait
+900 - 1200px:   Tablet landscape
+[1200 - 1800] is where our normal styles apply
+1800px + :      Big desktop
+$breakpoint arguement choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+ORDER: Base + typography > general layout + grid > page layout > components
+1em = 16px
+*/
+@mixin respond($breakpoint) {
+	@if $breakpoint == phone {
+		@media only screen and (max-width: 37.5em) {
+			@content;
+		} //600px ==>600/16;==>1em=1rem=16px
+	}
+	@if $breakpoint == tport {
+		@media only screen and (max-width: 56.25em) {
+			@content;
+		} //900px
+	}
+	@if $breakpoint == tland {
+		@media only screen and (max-width: 75em) {
+			@content;
+		} //1200px
+	}
+	@if $breakpoint == bigdesktop {
+		@media only screen and (min-width: 112.5em) {
+			@content;
+		} //1800
+	}
+}
+
+//variables//
+$default-font-size: 1.6rem;
+$grid-width: 114rem;
+
+//css resets//
+*,
+*::after,
+*::before {
+	box-sizing: inherit;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	// This defines what 1rem is
+	font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
+
+	@include respond(tland) {
+		// width < 1200?
+		font-size: 56.25%; //1 rem = 9px, 9/16 = 50%
+	}
+
+	@include respond(tport) {
+		// width < 900?
+		font-size: 50%; //1 rem = 8px, 8/16 = 50%
+	}
+
+	@include respond(bigdesktop) {
+		font-size: 75%; //1rem = 12, 12/16
+	}
+}
+body {
+	box-sizing: border-box;
+	font-size: 2rem;
+}
+
+::selection {
+	//background-color: $color-primary;
+	//color: $color-white;
+}
+
+/**
+ * Clear inner floats
+ */
+.clearfix::after {
+	clear: both;
+	content: '';
+	display: table;
+}
+
+/**
+   * Main content containers
+   * 1. Make the container full-width with a maximum width
+   * 2. Center it in the viewport
+   * 3. Leave some space on the edges, especially valuable on small screens
+   */
+.container {
+	max-width: $grid-width !important;
+	margin: 0 auto;
+	padding-left: 2rem; /* 3 */
+	padding-right: 2rem; /* 3 */
+	width: 100%; /* 1 */
+}
+
+.center-text {
+	text-align: center !important;
+}
+//margins-->bottom
+
+.mb-5 {
+	margin-bottom: 32rem !important;
+}
+.mb-4 {
+	margin-bottom: 16rem !important;
+}
+.mb-3 {
+	margin-bottom: 8rem !important;
+}
+.mb-2 {
+	margin-bottom: 4rem !important;
+}
+.mb-1 {
+	margin-bottom: 2rem !important;
+}
+//----->top
+
+.mt-5 {
+	margin-top: 32rem !important;
+}
+.mt-4 {
+	margin-top: 16rem !important;
+}
+.mt-3 {
+	margin-top: 8rem !important;
+}
+.mt-2 {
+	margin-top: 4rem !important;
+}
+.mt-1 {
+	margin-top: 2rem !important;
+}
+
+//fonts basic //@extend
+body {
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	line-height: 1.7;
+}
+////////////////////start from here for now /////////////////////////////////////////
+.autoprefixer-test2 {
+	user-select: none;
+}
+body {
+	color: wheat;
+}
