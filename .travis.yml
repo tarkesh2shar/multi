@@ -8,8 +8,7 @@ before_install:
   - docker build -t tarkesh2shar/client -f ./reactWebpackStarter/DockerFile.dev ./reactWebpackStarter
 script:
   - docker run tarkesh2shar/client npm run test
-  - aws ecr get-login --region ap-south-1
-  - eval $(aws ecr get-login  --region ap-south-1| sed 's|https://||')
+  - eval $(aws ecr get-login --region ap-south-1)
 after_success:
   - docker build -t 887171905960.dkr.ecr.ap-south-1.amazonaws.com/test-client ./reactWebpackStarter
   - docker build -t 887171905960.dkr.ecr.ap-south-1.amazonaws.com/test-nginx ./nginx
