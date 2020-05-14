@@ -1,16 +1,19 @@
 services:
   - docker
 before_install:
+  # aws login
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+  # aws login ends
   - docker build -t tarkesh2shar/client -f ./reactWebpackStarter/DockerFile.dev ./reactWebpackStarter
 script:
   - docker run tarkesh2shar/client npm run test
+  - eval $(aws ecr get-login --region ap-south-1)
 after_success:
-  - docker build -t tarkesh2shar/test-client ./reactWebpackStarter
-  - docker build -t tarkesh2shar/test-nginx ./nginx
-  - docker build -t tarkesh2shar/test-server ./server
+  - docker build -t 887171905960.dkr.ecr.ap-south-1.amazonaws.com/test-client ./reactWebpackStarter
+  - docker build -t 887171905960.dkr.ecr.ap-south-1.amazonaws.com/test-nginx ./nginx
+  - docker build -t 887171905960.dkr.ecr.ap-south-1.amazonaws.com/test-server ./server
 
-  #login into docker
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push tarkesh2shar/test-client
-  - docker push tarkesh2shar/test-nginx
-  - docker push tarkesh2shar/test-server
+  - docker push 887171905960.dkr.ecr.ap-south-1.amazonaws.com/test-client
+  - docker push 887171905960.dkr.ecr.ap-south-1.amazonaws.com/test-nginx
+  - docker push 887171905960.dkr.ecr.ap-south-1.amazonaws.com/test-server
