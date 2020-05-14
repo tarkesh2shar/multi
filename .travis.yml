@@ -17,3 +17,14 @@ after_success:
   - docker push 887171905960.dkr.ecr.ap-south-1.amazonaws.com/test-client
   - docker push 887171905960.dkr.ecr.ap-south-1.amazonaws.com/test-nginx
   - docker push 887171905960.dkr.ecr.ap-south-1.amazonaws.com/test-server
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-south-1"
+  app: "multi-docker"
+  env: "MultiDocker-env"
+  bucket_name: "elasticbeanstalk-ap-south-1-887171905960"
+  bucket_path: "docker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret-access-key: $AWS_SECRET_KEY
