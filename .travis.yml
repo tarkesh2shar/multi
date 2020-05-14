@@ -3,7 +3,7 @@ services:
 before_install:
   - docker build -t tarkesh2shar/client -f ./reactWebpackStarter/DockerFile.dev ./reactWebpackStarter
 script:
-  - docker run tarkesh2shar/checker npm run test
+  - docker run tarkesh2shar/client npm run test
 after_success:
   - docker build -t tarkesh2shar/test-client ./reactWebpackStarter
   - docker build -t tarkesh2shar/test-nginx ./nginx
